@@ -55,6 +55,7 @@ struct Details {
 	CaptionState caption = CaptionState::None;
 	std::optional<uint64> price;
 	bool effectAllowed = false;
+	bool translationAllowed = false;
 };
 
 enum class FillMenuResult : uchar {
@@ -71,6 +72,7 @@ enum class ActionType : uchar {
 	CaptionUp,
 	CaptionDown,
 	ChangePrice,
+	Translate,
 };
 struct Action {
 	using Type = ActionType;
@@ -88,6 +90,13 @@ FillMenuResult FillSendMenu(
 	Details details,
 	Fn<void(Action, Details)> action,
 	const style::ComposeIcons *iconsOverride = nullptr,
+	std::optional<QPoint> desiredPositionOverride = std::nullopt);
+
+FillMenuResult AttachSendMenuEffect(
+	not_null<Ui::PopupMenu*> menu,
+	std::shared_ptr<ChatHelpers::Show> show,
+	Details details,
+	Fn<void(Action, Details)> action,
 	std::optional<QPoint> desiredPositionOverride = std::nullopt);
 
 void SetupMenuAndShortcuts(

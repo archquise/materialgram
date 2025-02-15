@@ -26,6 +26,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "boxes/language_box.h"
 #include "boxes/username_box.h"
 #include "boxes/about_box.h"
+#include "boxes/star_gift_box.h"
 #include "ui/basic_click_handlers.h"
 #include "ui/boxes/confirm_box.h"
 #include "ui/controls/userpic_button.h"
@@ -34,6 +35,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "ui/wrap/slide_wrap.h"
 #include "ui/widgets/menu/menu_add_action_callback.h"
 #include "ui/widgets/continuous_sliders.h"
+#include "ui/widgets/popup_menu.h"
 #include "ui/text/text_utilities.h"
 #include "ui/toast/toast.h"
 #include "ui/new_badges.h"
@@ -41,6 +43,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "ui/vertical_list.h"
 #include "info/profile/info_profile_badge.h"
 #include "info/profile/info_profile_emoji_status_panel.h"
+#include "data/components/credits.h"
 #include "data/data_user.h"
 #include "data/data_session.h"
 #include "data/data_cloud_themes.h"
@@ -468,21 +471,16 @@ void SetupPremium(
 		showOther(PremiumId());
 	});
 	{
-		const auto wrap = container->add(
-			object_ptr<Ui::SlideWrap<Ui::VerticalLayout>>(
-				container,
-				object_ptr<Ui::VerticalLayout>(container)));
-		wrap->toggleOn(
-			controller->session().creditsValue(
-			) | rpl::map(rpl::mappers::_1 > 0));
-		wrap->finishAnimating();
+		controller->session().credits().load();
 		AddPremiumStar(
 			AddButtonWithLabel(
-				wrap->entity(),
-				tr::lng_credits_summary_title(),
-				controller->session().creditsValue(
-				) | rpl::map([=](uint64 c) {
-					return c ? Lang::FormatCountToShort(c).string : QString{};
+				container,
+				tr::lng_settings_credits(),
+				controller->session().credits().balanceValue(
+				) | rpl::map([=](StarsAmount c) {
+					return c
+						? Lang::FormatStarsAmountToShort(c).string
+						: QString();
 				}),
 				st::settingsButton),
 			true
@@ -501,12 +499,6 @@ void SetupPremium(
 	});
 	Ui::NewBadge::AddToRight(button);
 
-	const auto api = button->lifetime().make_state<Api::CreditsStatus>(
-		controller->session().user());
-	api->request({}, [=](Data::CreditsStatusSlice slice) {
-		controller->session().setCredits(slice.balance);
-	});
-
 	if (controller->session().premiumCanBuy()) {
 		const auto button = AddButtonWithIcon(
 			container,
@@ -515,7 +507,7 @@ void SetupPremium(
 			{ .icon = &st::menuIconGiftPremium }
 		);
 		button->addClickHandler([=] {
-			controller->showGiftPremiumsBox(u"gift"_q);
+			Ui::ChooseStarGiftRecipient(controller);
 		});
 	}
 	Ui::AddSkip(container);
@@ -577,7 +569,8 @@ void SetupInterfaceScale(
 		st::settingsScale,
 		st::settingsScaleLabel,
 		st::normalFont->spacew * 2,
-		st::settingsScaleLabel.style.font->width("300%"));
+		st::settingsScaleLabel.style.font->width("300%"),
+		true);
 	container->add(
 		std::move(sliderWithLabel.widget),
 		icon ? st::settingsScalePadding : st::settingsBigScalePadding);
@@ -787,7 +780,7 @@ void Main::fillTopBarMenu(const Ui::Menu::MenuCallback &addAction) {
 		addAction(
 			tr::lng_settings_information(tr::now),
 			[=] { showOther(Information::Id()); },
-			&st::menuIconInfo);
+			&st::menuIconEdit);
 	}
 	const auto window = &_controller->window();
 	addAction({

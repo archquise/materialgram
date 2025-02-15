@@ -67,8 +67,8 @@ namespace {
 
 using SectionCustomTopBarData = Info::Settings::SectionCustomTopBarData;
 
-[[nodiscard]] Data::SubscriptionOptions SubscriptionOptionsForRows(
-		Data::SubscriptionOptions result) {
+[[nodiscard]] Data::PremiumSubscriptionOptions SubscriptionOptionsForRows(
+		Data::PremiumSubscriptionOptions result) {
 	for (auto &option : result) {
 		const auto total = option.costTotal;
 		const auto perMonth = option.costPerMonth;
@@ -1395,10 +1395,6 @@ void ShowPremiumPromoToast(
 	const auto toast = std::make_shared<WeakToast>();
 	(*toast) = show->showToast({
 		.text = std::move(textWithLink),
-		.st = &st::defaultMultilineToast,
-		.duration = Ui::Toast::kDefaultDuration * 2,
-		.adaptive = true,
-		.multiline = true,
 		.filter = crl::guard(&show->session(), [=](
 				const ClickHandlerPtr &,
 				Qt::MouseButton button) {
@@ -1416,6 +1412,8 @@ void ShowPremiumPromoToast(
 			}
 			return false;
 		}),
+		.adaptive = true,
+		.duration = Ui::Toast::kDefaultDuration * 2,
 	});
 }
 
@@ -1431,7 +1429,7 @@ not_null<Ui::RoundButton*> CreateLockedButton(
 
 	const auto labelSt = result->lifetime().make_state<style::FlatLabel>(
 		st::defaultFlatLabel);
-	labelSt->style.font = st.font;
+	labelSt->style.font = st.style.font;
 	labelSt->textFg = st.textFg;
 
 	const auto label = Ui::CreateChild<Ui::FlatLabel>(
@@ -1775,7 +1773,29 @@ void AddSummaryPremium(
 	}
 
 	Ui::AddSkip(content, descriptionPadding.bottom());
+}
 
+std::unique_ptr<Ui::RpWidget> MakeEmojiStatusPreview(
+		not_null<QWidget*> parent,
+		not_null<DocumentData*> document) {
+	auto result = std::make_unique<Ui::RpWidget>(parent);
+
+	const auto raw = result.get();
+	const auto size = HistoryView::Sticker::EmojiSize();
+	const auto emoji = raw->lifetime().make_state<EmojiStatusTopBar>(
+		document,
+		[=](QRect r) { raw->update(std::move(r)); },
+		size);
+	raw->paintRequest() | rpl::start_with_next([=] {
+		auto p = QPainter(raw);
+		emoji->paint(p);
+	}, raw->lifetime());
+
+	raw->sizeValue() | rpl::start_with_next([=](QSize size) {
+		emoji->setCenter(QPointF(size.width() / 2., size.height() / 2.));
+	}, raw->lifetime());
+
+	return result;
 }
 
 } // namespace Settings

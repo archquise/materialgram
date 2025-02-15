@@ -1,3 +1,142 @@
+5.10.3.1 (18.01.25)
+
+- Official changelog:
+- Fix a crash in legacy group opening.
+- Fix double verification badge in profiles.
+- Show "Boost group the send messages" information.
+- Fix several gifts bugs and glitches.
+- Collectible Gifts.
+- Reactions for Service Messages.
+- Verification from Third Parties.
+- Custom Emoji in Folder Names.
+
+5.9.0.1 (14.12.24)
+
+- Use new icons in active sessions menu
+- Official changelog:
+- Affiliate programs for bots.
+- Add option to show folder tags in chats list.
+- Ctrl+Click on Reply in groups to reply in another chat.
+- Fix freeze on forward messages box opening.
+- Improve phrases in bot subscriptions.
+- Improve bottom label color in mini apps.
+- Fix some fullscreen issues in mini apps.
+- Fix miss-order of archived chats in forward box.
+- Fix emoji status pack view from profile regression.
+
+5.8.1.1 (18.11.24)
+
+- Removed recent stickers limit
+- Official changelog:
+- Updates in Mini Apps platform.
+- Chat folders in forward and share boxes.
+- Horizontal strip mode for chat folders.
+- Fix recompressed video playback cutoff.
+- Fix occasional redundant newlines before message timestamp.
+- Remove playback speed change on settings button click.
+- Fix video playback settings button on hidpi screens.
+- Fix return from Picture-in-Picture to media viewer.
+- Fix video quality auto-switching in Picture-in-Picture.
+- Add message link to channel stars transaction information.
+- Fix GIF playback in media viewer.
+- Fix several possible crashes.
+
+5.7.0.1 (01.11.24)
+
+- Translate outgoing messages to the chat language (experimental)
+- Official changelog:
+- Sending video messages.
+- New video quality selection in channels.
+- Adding media to sent text messages via Edit.
+- Ads in bots with revenue sharing with bot developers.
+- Chat-specific hashtags.
+- Add ability to change page scale in Instant View pages.
+- Fix unnecessary timestamp jump to a new line.
+- Fix secondary button positioning in miniapps.
+- Fix a crash in QR code copy for a chat without a photo.
+- Fix a crash in share options menu showing.
+- Fix a crash on monitor disconnect.
+- Message selection marks.
+- Better copy username / public link / ID menu in profiles.
+- Keyboard navigation (Up/Down/PageUp/PageDown) in chat preview.
+- Improved QR options for profile links.
+- Fix calls color problems on Windows.
+- Fix scroll problems on Linux.
+
+5.6.1.1 (07.10.24)
+
+- Official changelog:
+- Fix media viewer sometimes blocking the app after launch.
+- Gifts for Telegram Stars.
+- Mention / hashtag autocomplete in media caption field.
+- Resizing the window used for web apps and games.
+- "Include muted chats in folder counters" notifications setting.
+- Emoji from Unicode 15.1.
+- Allow drag-to-scroll in reply quote edit box.
+- Add bot verified badge to web app title.
+- Add ability to share QR code of bots.
+- Add mention/hashtag autocomplete to Saved GIF caption.
+- Fixed display of working hours in profiles.
+- Respect the maximum reply quote length.
+- Allow resizing the window used for web apps and games.
+- Add mention / hashtag autocomplete in media caption field.
+- Add "Include muted chats in folder counters" notifications setting.
+- Auto-select URL suggested from clipboard when creating a custom link.
+- Update emoji to Unicode 15.1.
+- Fix replying with a quote from media album caption.
+- Fix viewing custom emoji packs from media album caption.
+- Suggest URL from clipboard when creating a custom link.
+- Fix animated topic icons in topic info page.
+- Fix excessive getChannelDifference requests.
+
+5.5.4.1 (13.09.24)
+
+- Official changelog:
+- Fix channel updates stopping after difference request failing.
+- Add QR code generation for your username in Settings.
+- Add mention link QR code sharing.
+- Fix sending files from network drives. (Windows)
+- Support two bottom buttons in web apps.
+- Fix text layout outside of the message bubble glitch.
+- Don't stop video when dragging media viewer in window mode.
+- Fix crash in peer short info box.
+- Star Giveaways.
+- Swipe-to-Reply.
+- Audio device selection in one-on-one calls.
+- Text selection in collapsed / expanded quotes.
+
+5.4.1.1 (17.08.24)
+
+- Official changelog:
+- Super Channels with post authors' profiles.
+- Support favorite channels with Star Reactions.
+- Channel Subscriptions with Stars monthly payments.
+
+5.3.0.1 (01.08.24)
+
+- Official changelog:
+- View recent and popular web apps in chats search.
+- Open several web apps in different windows.
+- Gift Telegram Stars to your friends.
+- Send location marks and venues.
+- Open tonsite:// links in webview.
+- Edit order of stickers in your packs.
+
+5.2.6.1 (30.07.24)
+
+- Official changelog:
+- Fix launching on X11. (Linux)
+
+5.2.5.1 (27.07.24)
+
+- Fix media viewer context menu.
+- Fix blockquotes layout in messages.
+- Allow opening several web apps.
+- Send location marks and venues.
+- Fix crash in bot star stats page.
+- Fix topics search in topic groups.
+- Fix Instant View pages content updating.
+
 5.2.1.1 (01.07.24)
 
 - Show data center for groups and channels
